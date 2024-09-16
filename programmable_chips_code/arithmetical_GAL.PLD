@@ -1,0 +1,23 @@
+Name     GalF2_Artimetica ;
+PartNo   00 ;
+Date     21/10/2022 ;
+Revision 01 ;
+Designer Engineer ;
+Company  LaSalle ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = [MJ0, MJ1, MJ2, MJ3, MJ4, MJ5, MJ6, MJ7, Load, StartGame];        
+
+
+/* *************** OUTPUT PINS *********************/
+PIN [23, 22, 21] = [WinnerJ, NotLoad, NotStartGame];
+
+
+WinnerJ = MJ0 & MJ1 & MJ2 & MJ3 & MJ4 & MJ5 & MJ6 & MJ7;
+NotLoad = !Load;
+NotStartGame = !StartGame;
+
+

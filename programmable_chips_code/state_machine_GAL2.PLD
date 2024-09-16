@@ -1,0 +1,47 @@
+Name     GalF2_Sortides ;
+PartNo   00 ;
+Date     21/10/2022 ;
+Revision 01 ;
+Designer Engineer ;
+Company  LaSalle ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN [1, 2, 3, 4, 5, 8, 9, 10, 11] = [T, BA0, BA1, BA2, BA3, D0, D1, D2, D3];  
+
+/* *************** OUTPUT PINS *********************/
+PIN [23, 22, 21, 20, 19, 18, 17, 16, 15, 14] = [TA, TRand, ACK, FiA, TMarcats, N_NMR, TMJ0, TMJ1, TCC, CanviJ]; 
+
+
+E0 = !D3 & !D2 & !D1 & !D0;
+E1 = !D3 & !D2 & !D1 & D0;
+E2 = !D3 & !D2 & D1 & !D0;
+E3 = !D3 & !D2 & D1 & D0;
+E4 = !D3 & D2 & !D1 & !D0;
+E5 = !D3 & D2 & !D1 & D0;
+E6 = !D3 & D2 & D1 & !D0;
+E7 = !D3 & D2 & D1 & D0;
+E8 = D3 & !D2 & !D1 & !D0;
+E9 = D3 & !D2 & !D1 & D0;
+E10 = D3 & !D2 & D1 & !D0;
+E11 = D3 & !D2 & D1 & D0;
+E12 = D3 & D2 & !D1 & !D0;
+E13 = D3 & D2 & !D1 & D0;
+E14 = D3 & D2 & D1 & !D0;
+E15 = D3 & D2 & D1 & D0;  
+
+
+TA = (E1 & !T) # (E4 & !T) # (E9 & !T);
+ACK = (E4 & !T);
+N_NMR = !(E3 # E12 # E14);
+TRand = (E5 & !T) # (E15 & !T);
+TMarcats = E9 & !T;
+TMJ0 = E10 & !T # E0;
+TCC = (E12 & !T) # (E14 & !T);
+TMJ1 = E13 & !T # E0;
+
+CanviJ = (BA3 & !BA2 & !BA1 & !BA0);
+FiA = (!BA3 & !BA2 & !BA1 & !BA0);
+

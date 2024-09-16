@@ -1,0 +1,66 @@
+Name     GalF2_Control ;
+PartNo   00 ;
+Date     21/10/2022 ;
+Revision 01 ;
+Designer Engineer ;
+Company  LaSalle ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 23] = [T, NewNumber, StartGame, FiA, NextM, N_AMarcar, CanviJ, D0, D1, 
+D2, D3, 1Seg, WinnerJ]; 
+/* *************** OUTPUT PINS *********************/
+PIN [21, 20, 19, 18, 17, 16, 15, 14] = [N_NCS, N_NWE, NLE, DF0, DF1, DF2, DF3, N_NOE];
+
+
+
+E0 = !D3 & !D2 & !D1 & !D0;
+E1 = !D3 & !D2 & !D1 & D0;
+E2 = !D3 & !D2 & D1 & !D0;
+E3 = !D3 & !D2 & D1 & D0;
+E4 = !D3 & D2 & !D1 & !D0;
+E5 = !D3 & D2 & !D1 & D0;
+E6 = !D3 & D2 & D1 & !D0;
+E7 = !D3 & D2 & D1 & D0;
+E8 = D3 & !D2 & !D1 & !D0;
+E9 = D3 & !D2 & !D1 & D0;
+E10 = D3 & !D2 & D1 & !D0;
+E11 = D3 & !D2 & D1 & D0;
+E12 = D3 & D2 & !D1 & !D0;
+E13 = D3 & D2 & !D1 & D0;
+E14 = D3 & D2 & D1 & !D0;
+E15 = D3 & D2 & D1 & D0;  
+
+
+EF0 = (E1 & !FiA);
+EF1 = E0;
+EF2 = (E1 & FiA) # (E2 & (!NewNumber & !StartGame)) # E4;
+EF3 = E2 & (NewNumber & !StartGame);
+EF4 = E3;
+EF5 = (E2 & StartGame) # (E5 & !NextM);
+EF6 = (E5 & NextM) # (E9 & (!CanviJ & !FiA)) # (E10 & !WinnerJ) # (E15 & NextM);
+EF7 = E6 & !N_AMarcar;
+EF8 = E7;
+EF9 = (E6 & N_AMarcar) # E8;
+EF10 = E9 & (CanviJ & !FiA);
+EF11 = (E10 & WinnerJ) # (E13 & WinnerJ) # E11;
+EF12 = E9 & FiA;
+EF13 = E12;
+EF14 = (E13 & !WinnerJ) # (E15 & (1Seg & !NextM));
+EF15 = E14 # (E15 & (!1Seg & !NextM));
+
+
+DF0 = EF1 # EF3 # EF5 # EF7 # EF9 # EF11 # EF13 # EF15;
+DF1 = EF2 # EF3 # EF6 # EF7 # EF10 # EF11 # EF14 # EF15;
+DF2 = EF4 # EF5 # EF6 # EF7 # EF12 # EF13 # EF14 # EF15;
+DF3 = EF8 # EF9 # EF10 # EF11 # EF12 # EF13 # EF14 # EF15;
+
+
+NLE = !(N_NCS # N_NOE);
+N_NWE = !(E0 # E3 # E7);
+N_NCS = !(E0 # (E3 & !T) # (E6 & !T) # (E7 & !T) # (E8 & !T));
+N_NOE = !(E6 # E8);
+
+
